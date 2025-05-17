@@ -29,7 +29,14 @@ export interface StringDictDataType extends DictDataType {
 }
 
 export const getDictOptions = (dictType: string) => {
-  return dictStore.getDictByType(dictType) || []
+  const dictStore = useDictStoreWithOut()
+  // 添加调试日志
+  console.log('获取字典类型:', dictType)
+  console.log('字典数据:', dictStore.getDictMap)
+  const dictOptions = dictStore.getDictByType(dictType) || []
+  // 输出获取到的特定字典数据
+  console.log('获取到的字典选项:', dictOptions)
+  return dictOptions
 }
 
 export const getIntDictOptions = (dictType: string): NumberDictDataType[] => {
@@ -97,14 +104,22 @@ export const getDictObj = (dictType: string, value: any): DictDataType | undefin
  * @return 字典名称
  */
 export const getDictLabel = (dictType: string, value: any): string => {
+  if (value === undefined || value === null || value === '') {
+    return ''
+  }
+  
   const dictOptions: DictDataType[] = getDictOptions(dictType)
-  const dictLabel = ref('')
-  dictOptions.forEach((dict: DictDataType) => {
-    if (dict.value === value + '') {
-      dictLabel.value = dict.label
+  const valueStr = String(value)
+  
+  // 查找匹配的字典项
+  for (const dict of dictOptions) {
+    if (dict.value === valueStr) {
+      return dict.label
     }
-  })
-  return dictLabel.value
+  }
+  
+  // 未找到匹配项，返回原始值
+  return valueStr
 }
 
 export enum DICT_TYPE {
@@ -151,6 +166,13 @@ export enum DICT_TYPE {
   BPM_OA_LEAVE_TYPE = 'bpm_oa_leave_type',
   BPM_PROCESS_LISTENER_TYPE = 'bpm_process_listener_type',
   BPM_PROCESS_LISTENER_VALUE_TYPE = 'bpm_process_listener_value_type',
+
+  // ========== ENTERPRISE 模块 ==========
+  ENTERPRISE_TYPE_ENUM = 'enterprise_type_enum', // 企业类型
+  ENTERPRISE_INFO_STATUS = 'enterprise_info_status', // 企业状态
+  ENTERPRISE_STORE_STATUS = 'enterprise_store_status', // 企业门店状态
+  ENTERPRISE_USER_RELATION_TYPE = 'enterprise_user_relation_type', // 企业用户关系类型
+  ENTERPRISE_RELATION_TYPE = 'enterprise_relation_type', // 企业关系类型
 
   // ========== PAY 模块 ==========
   PAY_CHANNEL_CODE = 'pay_channel_code', // 支付渠道编码类型
@@ -245,5 +267,10 @@ export enum DICT_TYPE {
   IOT_PLUGIN_STATUS = 'iot_plugin_status', // IOT 插件状态
   IOT_PLUGIN_TYPE = 'iot_plugin_type', // IOT 插件类型
   IOT_DATA_BRIDGE_DIRECTION_ENUM = 'iot_data_bridge_direction_enum', // 桥梁方向
-  IOT_DATA_BRIDGE_TYPE_ENUM = 'iot_data_bridge_type_enum' // 桥梁类型
+  IOT_DATA_BRIDGE_TYPE_ENUM = 'iot_data_bridge_type_enum', // 桥梁类型
+
+  // ========== 企业资质模块 ==========
+  ENTERPRISE_QUALIFICATION_STATUS = 'enterprise_qualification_status', // 企业资质状态
+  ENTERPRISE_QUALIFICATION_TYPE = 'enterprise_qualification_type', // 企业资质类型
+  ENTERPRISE_QUALIFICATION_AUDIT_STATUS = 'enterprise_qualification_audit_status', // 企业资质审核状态
 }
