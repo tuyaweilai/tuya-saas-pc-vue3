@@ -62,6 +62,7 @@ export const useDictStore = defineStore('dict', {
             cssClass: dictData.cssClass
           })
         })
+        
         this.dictMap = dictDataMap
         this.isSetDict = true
         wsCache.set(CACHE_KEY.DICT_CACHE, dictDataMap, { exp: 60 }) // 60 秒 过期
@@ -92,6 +93,7 @@ export const useDictStore = defineStore('dict', {
           cssClass: dictData.cssClass
         })
       })
+      
       this.dictMap = dictDataMap
       this.isSetDict = true
       wsCache.set(CACHE_KEY.DICT_CACHE, dictDataMap, { exp: 60 }) // 60 秒 过期

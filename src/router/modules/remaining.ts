@@ -448,6 +448,24 @@ const remainingRouter: AppRouteRecordRaw[] = [
     ]
   },
   {
+    path: '/enterprise',
+    component: Layout,
+    name: 'EnterpriseCenter',
+    meta: { hidden: true },
+    children: [
+      {
+        path: 'info/detail/:id',
+        name: 'EnterpriseDetail',
+        meta: {
+          title: '企业详情',
+          noCache: true,
+          hidden: true
+        },
+        component: () => import('@/views/enterprise/info/detail/index.vue')
+      }
+    ]
+  },
+  {
     path: '/pay',
     component: Layout,
     name: 'pay',

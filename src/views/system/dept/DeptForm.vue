@@ -21,6 +21,15 @@
       <el-form-item label="部门名称" prop="name">
         <el-input v-model="formData.name" placeholder="请输入部门名称" />
       </el-form-item>
+      <el-form-item label="部门类型" prop="deptType">
+        <el-radio-group v-model="formData.deptType">
+          <el-radio
+            v-for="dict in getIntDictOptions(DICT_TYPE.SYSTEM_DEPT_TYPE)"
+            :key="dict.value"
+            :label="dict.value"
+          >{{ dict.label }}</el-radio>
+        </el-radio-group>
+      </el-form-item>
       <el-form-item label="显示排序" prop="sort">
         <el-input-number v-model="formData.sort" :min="0" controls-position="right" />
       </el-form-item>
@@ -79,6 +88,7 @@ const formData = ref({
   title: '',
   parentId: undefined,
   name: undefined,
+  deptType: 1, // 默认为部门类型
   sort: undefined,
   leaderUserId: undefined,
   phone: undefined,
@@ -88,6 +98,7 @@ const formData = ref({
 const formRules = reactive<FormRules>({
   parentId: [{ required: true, message: '上级部门不能为空', trigger: 'blur' }],
   name: [{ required: true, message: '部门名称不能为空', trigger: 'blur' }],
+  deptType: [{ required: true, message: '部门类型不能为空', trigger: 'blur' }],
   sort: [{ required: true, message: '显示排序不能为空', trigger: 'blur' }],
   email: [{ type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change'] }],
   phone: [
@@ -154,6 +165,7 @@ const resetForm = () => {
     title: '',
     parentId: undefined,
     name: undefined,
+    deptType: 1, // 默认为部门类型
     sort: undefined,
     leaderUserId: undefined,
     phone: undefined,

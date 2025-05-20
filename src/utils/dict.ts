@@ -144,6 +144,7 @@ export enum DICT_TYPE {
   SYSTEM_MAIL_SEND_STATUS = 'system_mail_send_status',
   SYSTEM_NOTIFY_TEMPLATE_TYPE = 'system_notify_template_type',
   SYSTEM_SOCIAL_TYPE = 'system_social_type',
+  SYSTEM_DEPT_TYPE = 'system_dept_type', // 部门类型
 
   // ========== INFRA 模块 ==========
   INFRA_BOOLEAN_STRING = 'infra_boolean_string',

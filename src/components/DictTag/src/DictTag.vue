@@ -52,7 +52,37 @@ export default defineComponent({
         return null
       }
       const dictOptions = getDictOptions(props.type)
-
+      
+      // 调试日志
+      console.log('DictTag 调用:', props.type, props.value, dictOptions)
+      
+      // 如果没有匹配的字典选项，显示原始值
+      const hasMatchingOption = dictOptions.some(dict => valueArr.value.includes(dict.value))
+      if (!hasMatchingOption) {
+        return (
+          <div
+            class="dict-tag"
+            style={{
+              display: 'inline-flex',
+              gap: props.gutter,
+              justifyContent: 'center',
+              alignItems: 'center'
+            }}
+          >
+            {valueArr.value.map(val => {
+              return (
+                <ElTag
+                  type="info"
+                  disableTransitions={true}
+                >
+                  {val}
+                </ElTag>
+              )
+            })}
+          </div>
+        )
+      }
+      
       return (
         <div
           class="dict-tag"
