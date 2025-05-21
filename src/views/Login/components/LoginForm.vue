@@ -247,6 +247,14 @@ const getTenantByWebsite = async () => {
   }
 }
 const loading = ref() // ElLoading.service 返回的实例
+// SSO 跳转兼容
+const doRedirect = () => {
+  if (redirect.value && redirect.value.indexOf('sso') !== -1) {
+    window.location.href = window.location.href.replace('/login?redirect=', '')
+  } else {
+    push({ path: redirect.value || permissionStore.addRouters[0].path })
+  }
+}
 // 登录
 const handleLogin = async (params: any) => {
   loginLoading.value = true
@@ -273,14 +281,30 @@ const handleLogin = async (params: any) => {
       authUtil.removeLoginForm()
     }
     authUtil.setToken(res)
-    if (!redirect.value) {
-      redirect.value = '/'
-    }
-    // 判断是否为SSO登录
-    if (redirect.value.indexOf('sso') !== -1) {
-      window.location.href = window.location.href.replace('/login?redirect=', '')
-    } else {
-      await push({ path: redirect.value || permissionStore.addRouters[0].path })
+    // 关键分支处理
+    switch (res.enterpriseBindingStatus) {
+      case 0: // SKIP_BINDING
+      case 3: // ALREADY_BOUND_DEFAULT
+        authUtil.removeEnterpriseBindingStatus() // 清除状态
+        doRedirect()
+        break
+      case 1: // AUTO_BIND_SUCCESS
+        authUtil.removeEnterpriseBindingStatus() // 清除状态
+        message.success('已自动绑定企业：' + (res.boundEnterpriseName || ''))
+        doRedirect()
+        break
+      case 2: // MANUAL_AUTH_REQUIRED
+        // 保存状态并跳转到企业认证引导页
+        authUtil.setEnterpriseBindingStatus(res.enterpriseBindingStatus)
+        window.location.href = '/enterprise/guide'
+        break
+      case 4: // ALREADY_BOUND_NOT_DEFAULT
+        // 保存状态并跳转到企业选择页
+        authUtil.setEnterpriseBindingStatus(res.enterpriseBindingStatus)
+        window.location.href = '/enterprise/select'
+        break
+      default:
+        message.error('未知企业认证状态')
     }
   } finally {
     loginLoading.value = false

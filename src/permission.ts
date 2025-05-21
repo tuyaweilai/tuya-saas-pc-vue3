@@ -1,7 +1,7 @@
 import router from './router'
 import type { RouteRecordRaw } from 'vue-router'
 import { isRelogin } from '@/config/axios/service'
-import { getAccessToken } from '@/utils/auth'
+import { getAccessToken, getEnterpriseBindingStatus } from '@/utils/auth'
 import { useTitle } from '@/hooks/web/useTitle'
 import { useNProgress } from '@/hooks/web/useNProgress'
 import { usePageLoading } from '@/hooks/web/usePageLoading'
@@ -56,11 +56,28 @@ const whiteList = [
   '/oauthLogin/gitee'
 ]
 
+// 企业认证相关路由白名单
+const enterpriseWhiteList = ['/enterprise/guide', '/enterprise/select']
+
 // 路由加载前
 router.beforeEach(async (to, from, next) => {
   start()
   loadStart()
   if (getAccessToken()) {
+    // 检查企业认证状态
+    const enterpriseBindingStatus = getEnterpriseBindingStatus()
+    if (enterpriseBindingStatus) {
+      // 如果有未完成的企业认证状态
+      if (enterpriseBindingStatus === 2 && to.path !== '/enterprise/guide') {
+        next('/enterprise/guide')
+        return
+      }
+      if (enterpriseBindingStatus === 4 && to.path !== '/enterprise/select') {
+        next('/enterprise/select')
+        return
+      }
+    }
+
     if (to.path === '/login') {
       next({ path: '/' })
     } else {

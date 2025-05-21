@@ -78,3 +78,17 @@ export const getVisitTenantId = () => {
 export const setVisitTenantId = (visitTenantId: number) => {
   wsCache.set(CACHE_KEY.VisitTenantId, visitTenantId)
 }
+
+// ========== 企业认证状态相关 ==========
+
+export const getEnterpriseBindingStatus = () => {
+  return wsCache.get(CACHE_KEY.EnterpriseBindingStatus)
+}
+
+export const setEnterpriseBindingStatus = (status: number) => {
+  wsCache.set(CACHE_KEY.EnterpriseBindingStatus, status)
+}
+
+export const removeEnterpriseBindingStatus = () => {
+  wsCache.delete(CACHE_KEY.EnterpriseBindingStatus)
+}

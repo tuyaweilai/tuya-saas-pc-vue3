@@ -11,6 +11,7 @@ export const CACHE_KEY = {
   ROLE_ROUTERS: 'roleRouters',
   USER: 'user',
   VisitTenantId: 'visitTenantId',
+  EnterpriseBindingStatus: 'enterpriseBindingStatus', // 企业认证状态
   // 系统设置
   IS_DARK: 'isDark',
   LANG: 'lang',
@@ -37,5 +38,6 @@ export const deleteUserCache = () => {
   wsCache.delete(CACHE_KEY.USER)
   wsCache.delete(CACHE_KEY.ROLE_ROUTERS)
   wsCache.delete(CACHE_KEY.VisitTenantId)
+  wsCache.delete(CACHE_KEY.EnterpriseBindingStatus) // 清除企业认证状态
   // 注意，不要清理 LoginForm 登录表单
 }

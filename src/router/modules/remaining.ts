@@ -448,6 +448,16 @@ const remainingRouter: AppRouteRecordRaw[] = [
     ]
   },
   {
+    path: '/enterprise/guide',
+    component: () => import('@/views/enterprise/guide/index.vue'),
+    name: 'EnterpriseGuide',
+    meta: {
+      title: '企业认证',
+      noCache: true,
+      hidden: true
+    }
+  },
+  {
     path: '/enterprise',
     component: Layout,
     name: 'EnterpriseCenter',
