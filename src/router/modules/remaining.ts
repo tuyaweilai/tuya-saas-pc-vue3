@@ -448,11 +448,29 @@ const remainingRouter: AppRouteRecordRaw[] = [
     ]
   },
   {
+    path: '/pay',
+    component: Layout,
+    name: 'pay',
+    meta: { hidden: true },
+    children: [
+      {
+        path: 'cashier',
+        name: 'PayCashier',
+        meta: {
+          title: '收银台',
+          noCache: true,
+          hidden: true
+        },
+        component: () => import('@/views/pay/cashier/index.vue')
+      }
+    ]
+  },
+  {
     path: '/enterprise/guide',
     component: () => import('@/views/enterprise/guide/index.vue'),
     name: 'EnterpriseGuide',
     meta: {
-      title: '企业认证',
+      title: '企业入驻申请',
       noCache: true,
       hidden: true
     }
@@ -472,24 +490,6 @@ const remainingRouter: AppRouteRecordRaw[] = [
           hidden: true
         },
         component: () => import('@/views/enterprise/info/detail/index.vue')
-      }
-    ]
-  },
-  {
-    path: '/pay',
-    component: Layout,
-    name: 'pay',
-    meta: { hidden: true },
-    children: [
-      {
-        path: 'cashier',
-        name: 'PayCashier',
-        meta: {
-          title: '收银台',
-          noCache: true,
-          hidden: true
-        },
-        component: () => import('@/views/pay/cashier/index.vue')
       }
     ]
   },

@@ -148,6 +148,16 @@
         </el-form-item>
       </el-col>
     </el-row>
+    <EnterpriseAuthGuideDialog
+      v-if="showEnterpriseAuthGuideDialog"
+      v-model:visible="showEnterpriseAuthGuideDialog"
+      @success="onAuthGuideSuccess"
+    />
+    <SelectOperatingEnterpriseDialog
+      v-if="showEnterpriseSelectDialog"
+      v-model:visible="showEnterpriseSelectDialog"
+      @success="onSelectEnterpriseSuccess"
+    />
   </el-form>
 </template>
 <script lang="ts" setup>
@@ -205,6 +215,10 @@ const socialList = [
   { icon: 'ant-design:github-filled', type: 0 },
   { icon: 'ant-design:alipay-circle-filled', type: 0 }
 ]
+
+// 新增弹窗控制
+const showEnterpriseAuthGuideDialog = ref(false)
+const showEnterpriseSelectDialog = ref(false)
 
 // 获取验证码
 const getCode = async () => {
@@ -285,23 +299,21 @@ const handleLogin = async (params: any) => {
     switch (res.enterpriseBindingStatus) {
       case 0: // SKIP_BINDING
       case 3: // ALREADY_BOUND_DEFAULT
-        authUtil.removeEnterpriseBindingStatus() // 清除状态
         doRedirect()
         break
       case 1: // AUTO_BIND_SUCCESS
-        authUtil.removeEnterpriseBindingStatus() // 清除状态
         message.success('已自动绑定企业：' + (res.boundEnterpriseName || ''))
         doRedirect()
         break
       case 2: // MANUAL_AUTH_REQUIRED
-        // 保存状态并跳转到企业认证引导页
-        authUtil.setEnterpriseBindingStatus(res.enterpriseBindingStatus)
-        window.location.href = '/enterprise/guide'
+        console.log('MANUAL_AUTH_REQUIRED')
+        // 不再打开弹窗，而是直接跳转到企业认证引导页
+        push({ path: '/enterprise/auth-guide' })
+        
         break
       case 4: // ALREADY_BOUND_NOT_DEFAULT
-        // 保存状态并跳转到企业选择页
-        authUtil.setEnterpriseBindingStatus(res.enterpriseBindingStatus)
-        window.location.href = '/enterprise/select'
+        // 不再打开弹窗，而是直接跳转到企业选择页
+        push({ path: '/enterprise/select' })
         break
       default:
         message.error('未知企业认证状态')
@@ -309,6 +321,51 @@ const handleLogin = async (params: any) => {
   } finally {
     loginLoading.value = false
     loading.value.close()
+  }
+}
+
+// 企业认证成功后的处理
+const onAuthGuideSuccess = async () => {
+  try {
+    const userInfo = await permissionStore.getInfo()
+    // 检查用户是否已成功绑定企业
+    if (!userInfo.boundEnterpriseId) {
+      message.warning('企业认证未完成，请重新登录')
+      await LoginApi.loginOut()
+      authUtil.removeToken()
+      // 重定向到登录页
+      window.location.href = '/login'
+      return
+    }
+    // 认证成功且已绑定企业，则进行SSO或普通跳转
+    doRedirect()
+  } catch (error) {
+    message.error('获取用户信息失败，请重新登录')
+    await LoginApi.loginOut()
+    authUtil.removeToken()
+    window.location.href = '/login'
+  }
+}
+
+// 企业选择成功后的处理
+const onSelectEnterpriseSuccess = async () => {
+  try {
+    const userInfo = await permissionStore.getInfo()
+    // 检查用户是否已成功设置默认企业
+    if (!userInfo.boundEnterpriseId) {
+      message.warning('未设置默认企业，请重新登录')
+      await LoginApi.loginOut()
+      authUtil.removeToken()
+      window.location.href = '/login'
+      return
+    }
+    // 设置成功，则进行SSO或普通跳转
+    doRedirect()
+  } catch (error) {
+    message.error('获取用户信息失败，请重新登录')
+    await LoginApi.loginOut()
+    authUtil.removeToken()
+    window.location.href = '/login'
   }
 }
 

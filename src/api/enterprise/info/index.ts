@@ -18,6 +18,24 @@ export interface InfoVO {
   contactName: string // 企业联系人姓名
   contactPhone: string // 企业联系人电话
   businessLicenseFileId: number // 营业执照附件ID (关联infra_file表)
+  status?: number // 企业状态
+  createTime?: string // 创建时间
+  auditRemark?: string // 审核备注
+}
+
+// 我的企业申请 VO
+export interface MyApplicationVO {
+  id?: number // 申请ID（可能为空，表示还未申请）
+  name?: string // 企业名称
+  enterpriseType?: number // 企业类型
+  status?: number // 审核状态 (0: 待审核, 1: 审核通过, 2: 审核拒绝)
+  createTime?: string // 申请时间
+  auditTime?: string // 审核时间
+  auditRemark?: string // 审核备注/拒绝原因
+  creditCode?: string // 统一社会信用代码
+  contactName?: string // 联系人姓名
+  contactPhone?: string // 联系电话
+  hasApplication?: boolean // 是否有申请记录
 }
 
 // 企业信息 API
@@ -50,5 +68,15 @@ export const InfoApi = {
   // 导出企业信息 Excel
   exportInfo: async (params) => {
     return await request.download({ url: `/enterprise/info/export-excel`, params })
+  },
+
+  // 获取我的企业入驻申请信息（单个申请）
+  getMyApplication: async (): Promise<MyApplicationVO> => {
+    return await request.get({ url: `/admin-api/enterprise/info/my-application` })
+  },
+
+  // 重新提交企业入驻申请
+  resubmitApplication: async (id: number) => {
+    return await request.post({ url: `/admin-api/enterprise/info/resubmit/${id}` })
   }
 }

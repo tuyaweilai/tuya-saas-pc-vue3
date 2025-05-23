@@ -98,7 +98,7 @@ service.interceptors.response.use(
     let { data } = response
     const config = response.config
     if (!data) {
-      // 返回“[HTTP]请求没有返回值”;
+      // 返回"[HTTP]请求没有返回值";
       throw new Error()
     }
     const { t } = useI18n()
@@ -177,7 +177,7 @@ service.interceptors.response.use(
           '<div>5 分钟搭建本地环境</div>'
       })
       return Promise.reject(new Error(msg))
-    } else if (code !== 200) {
+    } else if (code !== 200 && code !== 0) {
       if (msg === '无效的刷新令牌') {
         // hard coding：忽略这个提示，直接登出
         console.log(msg)
