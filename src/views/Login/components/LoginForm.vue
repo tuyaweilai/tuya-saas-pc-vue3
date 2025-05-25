@@ -249,6 +249,10 @@ const getTenantByWebsite = async () => {
 const loading = ref() // ElLoading.service 返回的实例
 // SSO 跳转兼容
 const doRedirect = () => {
+  if (!redirect.value) {
+    redirect.value = '/'
+  }
+
   if (redirect.value && redirect.value.indexOf('sso') !== -1) {
     window.location.href = window.location.href.replace('/login?redirect=', '')
   } else {

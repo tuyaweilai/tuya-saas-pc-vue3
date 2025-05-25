@@ -447,34 +447,7 @@ const remainingRouter: AppRouteRecordRaw[] = [
       }
     ]
   },
-  {
-    path: '/enterprise/guide',
-    component: () => import('@/views/enterprise/guide/index.vue'),
-    name: 'EnterpriseGuide',
-    meta: {
-      title: '企业认证',
-      noCache: true,
-      hidden: true
-    }
-  },
-  {
-    path: '/enterprise',
-    component: Layout,
-    name: 'EnterpriseCenter',
-    meta: { hidden: true },
-    children: [
-      {
-        path: 'info/detail/:id',
-        name: 'EnterpriseDetail',
-        meta: {
-          title: '企业详情',
-          noCache: true,
-          hidden: true
-        },
-        component: () => import('@/views/enterprise/info/detail/index.vue')
-      }
-    ]
-  },
+
   {
     path: '/pay',
     component: Layout,
@@ -772,6 +745,26 @@ const remainingRouter: AppRouteRecordRaw[] = [
           activeMenu: '/iot/plugin'
         },
         component: () => import('@/views/iot/plugin/detail/index.vue')
+      }
+    ]
+  },
+  {
+    path: '/enterprise',
+    component: Layout,
+    name: 'Enterprise',
+    meta: {
+      hidden: true
+    },
+    children: [
+      {
+        path: 'guide',
+        component: () => import('@/views/enterprise/guide/index.vue'),
+        name: 'EnterpriseGuide',
+        meta: {
+          title: '企业入驻引导',
+          noCache: true,
+          hidden: true
+        }
       }
     ]
   }
