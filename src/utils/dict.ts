@@ -274,4 +274,17 @@ export enum DICT_TYPE {
   ENTERPRISE_QUALIFICATION_STATUS = 'enterprise_qualification_status', // 企业资质状态
   ENTERPRISE_QUALIFICATION_TYPE = 'enterprise_qualification_type', // 企业资质类型
   ENTERPRISE_QUALIFICATION_AUDIT_STATUS = 'enterprise_qualification_audit_status', // 企业资质审核状态
+
+  // ========== WASTE - 危废转移模块 ==========
+  WASTE_APPOINTMENT_STATUS = 'waste_appointment_status', // 预约状态
+  WASTE_CATEGORY = 'waste_category', // 废物类别
+  WASTE_UNIT = 'waste_unit', // 数量单位
+  WASTE_ASSIGNMENT_TYPE = 'waste_assignment_type', // 分配方式
+  WASTE_BUSINESS_MODE = 'waste_business_mode', // 业务模式
+  WASTE_CODE = 'waste_code', // 废物代码
+  WASTE_ORDER_BUSINESS_STATUS = 'waste_order_business_status', // 转移订单业务状态
+  WASTE_ORDER_PAYMENT_STATUS = 'waste_order_payment_status', // 转移订单付款状态
+  WASTE_ORDER_SOURCE_TYPE = 'waste_order_source_type', // 转移订单来源类型
+  WASTE_PACKAGING_TYPE = 'waste_packaging_type', // 包装方式
+  WASTE_PAYMENT_METHOD_TYPE = 'waste_payment_method_type', // 付款方式类型
 }

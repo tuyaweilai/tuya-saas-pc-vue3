@@ -449,6 +449,26 @@ const remainingRouter: AppRouteRecordRaw[] = [
   },
 
   {
+    path: '/contract',
+    component: Layout,
+    name: 'ContractCenter',
+    meta: { hidden: true },
+    children: [
+      {
+        path: 'detail/:id',
+        name: 'ContractDetail',
+        meta: {
+          title: '合同详情',
+          noCache: true,
+          hidden: true,
+          activeMenu: '/contract/list'
+        },
+        component: () => import('@/views/contract/detail/index.vue')
+      }
+    ]
+  },
+
+  {
     path: '/pay',
     component: Layout,
     name: 'pay',
@@ -765,6 +785,27 @@ const remainingRouter: AppRouteRecordRaw[] = [
           noCache: true,
           hidden: true
         }
+      }
+    ]
+  },
+  {
+    path: '/waste',
+    component: Layout,
+    name: 'Waste',
+    meta: {
+      hidden: true
+    },
+    children: [
+      {
+        path: 'transfer-order/detail/:id',
+        name: 'WasteTransferOrderDetail',
+        meta: {
+          title: '危废转移订单详情',
+          noCache: true,
+          hidden: true,
+          activeMenu: '/waste/transfer-order/list'
+        },
+        component: () => import('@/views/waste/transfer-order/detail.vue')
       }
     ]
   }

@@ -524,7 +524,7 @@ onMounted(() => {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 24px;
+  margin-bottom: 28px;
   padding: 20px 0;
   border-bottom: 1px solid #f0f0f0;
 
@@ -532,7 +532,8 @@ onMounted(() => {
     h2 {
       font-size: 24px;
       color: #303133;
-      margin: 0 0 8px 0;
+      margin: 0 0 10px 0;
+      font-weight: 600;
     }
   }
 }
@@ -541,14 +542,15 @@ onMounted(() => {
   background: #fff;
   border: 1px solid #e4e7ed;
   border-radius: 8px;
-  padding: 24px;
-  margin-bottom: 24px;
+  padding: 28px;
+  margin-bottom: 28px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
 
   .card-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 24px;
 
     h3 {
       display: flex;
@@ -556,16 +558,18 @@ onMounted(() => {
       font-size: 18px;
       color: #303133;
       margin: 0;
+      font-weight: 600;
     }
   }
 
   .enterprise-details {
     .info-item {
-      margin-bottom: 12px;
+      margin-bottom: 16px;
 
       .label {
         color: #909399;
         font-size: 14px;
+        margin-right: 4px;
       }
 
       .value {
@@ -578,7 +582,7 @@ onMounted(() => {
 
   .no-enterprise {
     text-align: center;
-    padding: 40px 0;
+    padding: 48px 0;
   }
 }
 
@@ -586,18 +590,23 @@ onMounted(() => {
   background: #fff;
   border: 1px solid #e4e7ed;
   border-radius: 8px;
-  padding: 24px;
-  margin-bottom: 24px;
+  padding: 28px;
+  margin-bottom: 28px;
   text-align: center;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
 
   h3 {
     font-size: 18px;
     color: #303133;
-    margin: 0 0 20px 0;
+    margin: 0 0 24px 0;
+    font-weight: 600;
   }
 
   .overall-progress {
-    margin-bottom: 16px;
+    margin-bottom: 20px;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
 
     .progress-text {
       font-size: 16px;
@@ -616,32 +625,38 @@ onMounted(() => {
   h3 {
     font-size: 18px;
     color: #303133;
-    margin: 0 0 20px 0;
+    margin: 0 0 24px 0;
+    font-weight: 600;
   }
 
   .auth-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    gap: 20px;
+    gap: 24px;
   }
 
   .auth-item-card {
     background: #fff;
     border: 1px solid #e4e7ed;
     border-radius: 8px;
-    padding: 20px;
+    padding: 24px;
     transition: all 0.3s ease;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
 
     &:hover {
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
       border-color: #409eff;
+      transform: translateY(-2px);
     }
 
     .card-header {
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
-      margin-bottom: 16px;
+      margin-bottom: 20px;
 
       .item-info {
         display: flex;
@@ -656,7 +671,8 @@ onMounted(() => {
         h4 {
           font-size: 16px;
           color: #303133;
-          margin: 0 0 4px 0;
+          margin: 0 0 6px 0;
+          font-weight: 600;
         }
 
         .item-desc {
@@ -668,49 +684,53 @@ onMounted(() => {
 
       .status-tag {
         font-size: 12px;
+        padding: 4px 8px;
+        height: auto;
       }
     }
 
     .status-message {
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 8px;
       background: #f0f9ff;
       border: 1px solid #b3d8ff;
       border-radius: 4px;
-      padding: 8px 12px;
-      margin-bottom: 16px;
+      padding: 10px 14px;
+      margin-bottom: 20px;
       font-size: 14px;
       color: #409eff;
     }
 
     .required-qualifications {
-      margin-bottom: 16px;
+      margin-bottom: 20px;
 
       .req-title {
         font-size: 14px;
         color: #606266;
-        margin: 0 0 8px 0;
+        margin: 0 0 10px 0;
       }
 
       .req-list {
         display: flex;
         flex-wrap: wrap;
-        gap: 6px;
+        gap: 8px;
       }
     }
 
     .card-actions {
       display: flex;
       justify-content: flex-start;
+      margin-top: auto;
+      padding-top: 16px;
     }
 
     .dependency-tip {
       display: flex;
       align-items: center;
-      gap: 6px;
-      margin-top: 12px;
-      padding: 8px 12px;
+      gap: 8px;
+      margin-top: 16px;
+      padding: 10px 14px;
       background: #fdf6ec;
       border: 1px solid #faecd8;
       border-radius: 4px;
@@ -721,7 +741,7 @@ onMounted(() => {
 }
 
 .completion-banner {
-  margin-top: 24px;
+  margin-top: 28px;
 }
 
 // 响应式设计
@@ -739,9 +759,15 @@ onMounted(() => {
   .enterprise-details {
     .el-row {
       .el-col {
-        margin-bottom: 12px;
+        margin-bottom: 16px;
       }
     }
+  }
+  
+  .enterprise-info-card,
+  .progress-overview,
+  .auth-item-card {
+    padding: 20px;
   }
 }
 </style> 

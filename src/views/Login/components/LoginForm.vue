@@ -285,6 +285,14 @@ const handleLogin = async (params: any) => {
       authUtil.removeLoginForm()
     }
     authUtil.setToken(res)
+    // 检查用户是否为超级管理员
+    const isSuperAdmin = res.user && res.user.roles && res.user.roles.includes('super_admin')
+    if (isSuperAdmin) {
+      // 超级管理员直接进入系统，无需企业认证
+      authUtil.removeEnterpriseBindingStatus() // 清除状态
+      doRedirect()
+      return
+    }
     // 关键分支处理
     switch (res.enterpriseBindingStatus) {
       case 0: // SKIP_BINDING

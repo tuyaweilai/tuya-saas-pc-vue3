@@ -36,6 +36,21 @@ export interface EnterpriseSettlementVO {
   businessLicenseFileId: string // 营业执照附件ID
 }
 
+// 企业简易信息
+export interface EnterpriseSimple {
+  id: number
+  name: string
+  contactName?: string
+  contactPhone?: string
+  enterpriseType: number
+}
+
+// 企业列表查询参数
+export interface EnterpriseSimpleQuery {
+  enterpriseType?: number // 企业类型 (1:产废, 2:回收, 3:处置, 4:物流, 99:其他)
+  name?: string // 企业名称（模糊查询）
+}
+
 // 企业信息 API
 export const InfoApi = {
   // 查询企业信息分页
@@ -82,4 +97,13 @@ export const InfoApi = {
   getMyApplications: async () => {
     return await request.get({ url: `/enterprise/info/my-application` })
   }
+}
+
+/**
+ * 获取企业简易列表
+ * @param params 查询参数
+ * @returns 企业简易列表
+ */
+export const getEnterpriseSimpleList = (params?: EnterpriseSimpleQuery): Promise<EnterpriseSimple[]> => {
+  return request.get({ url: '/enterprise/info/simple-list', params })
 }
